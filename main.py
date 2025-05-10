@@ -9,6 +9,7 @@ DEFAULT_OUTPUT_FILE_PATH = "output/"
 DEFAULT_OUTPUT_FILE_NAME = "output.json"
 DEFAULT_INDENT = 2
 
+
 def initialize_client():
     """Initializes client. Returns clien object"""
     # Use environment variables for credentials
@@ -20,6 +21,7 @@ def initialize_client():
     creds = Credentials.from_service_account_file(credentials_path, scopes=scopes)
     client = gspread.authorize(creds)
     return client
+
 
 # Main
 def run_json_parser(client):
@@ -53,6 +55,7 @@ def run_json_parser(client):
 
     print("Success!")
     print(f"Exported JSON file to: {path}{filename}")
+
 
 if __name__ == "__main__":
     client = initialize_client()
