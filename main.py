@@ -5,8 +5,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 import json
 
-OUTPUT_FILE_PATH = "output/"
-OUTPUT_FILE_NAME = "output.json"
+DEFAULT_OUTPUT_FILE_PATH = "output/"
+DEFAULT_OUTPUT_FILE_NAME = "output.json"
 
 def initialize_client():
     """Initializes client. Returns clien object"""
@@ -23,23 +23,32 @@ def initialize_client():
 # Main
 def run_json_parser(client):
     """Runs JSON parser. Arg: client object"""
-    # Use environment variables for Sheet ID
+    # Use environment variables for Sheet ID and file path
     load_dotenv()
     workbook_id = os.getenv("GOOGLE_SHEET_ID")
     worksheet_id = os.getenv("WORKSHEET_NAME")
+    path = os.getenv("OUTPUT_FILE_PATH", DEFAULT_OUTPUT_FILE_PATH)
+    filename = os.getenv("OUTPUT_FILE_NAME", DEFAULT_OUTPUT_FILE_NAME)
+
+    # Defaults
+    if not path:
+        path = DEFAULT_OUTPUT_FILE_PATH
+    if not filename:
+        filename = DEFAULT_OUTPUT_FILE_NAME
 
     # Main parser
     wb = client.open_by_key(workbook_id)
     sht = wb.worksheet(worksheet_id)
     list_of_dicts = sht.get_all_records()
 
-    # Create json file
-    os.makedirs(OUTPUT_FILE_PATH, exist_ok=True)
-    file_path = f"{OUTPUT_FILE_PATH}/{OUTPUT_FILE_NAME}"
+    # Create JSON file
+    os.makedirs(path, exist_ok=True)
+    file_path = f"{path}{filename}"
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(list_of_dicts, f, indent=4)
 
-    print("DONE")
+    print("Success!")
+    print(f"Exported JSON file to: {path}{filename}")
 
 if __name__ == "__main__":
     client = initialize_client()
