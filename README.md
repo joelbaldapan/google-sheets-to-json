@@ -50,9 +50,12 @@ GOOGLE_SHEET_ID=your_google_sheet_id_here
 GOOGLE_SHEET_CREDENTIALS=your_credentials_path_here
 WORKSHEET_NAME=your_worksheet_name_here
 
-# Optional output settings
+# Optional output settings (Defaults shown below)
 OUTPUT_FILE_PATH=output/
 OUTPUT_FILE_NAME=output.json
+
+# Optional indent settings (Defaults shown below)
+INDENTS=2
 ```
 
 > 📌 Replace placeholder values with your actual Google Sheet ID, service account credentials path, and worksheet name.
