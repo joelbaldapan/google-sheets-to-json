@@ -7,7 +7,7 @@ import json
 
 DEFAULT_OUTPUT_FILE_PATH = "output/"
 DEFAULT_OUTPUT_FILE_NAME = "output.json"
-DEFAULT_INDENTS = 2
+DEFAULT_INDENT = 2
 
 def initialize_client():
     """Initializes client. Returns clien object"""
@@ -30,15 +30,15 @@ def run_json_parser(client):
     worksheet_id = os.getenv("WORKSHEET_NAME")
     path = os.getenv("OUTPUT_FILE_PATH", DEFAULT_OUTPUT_FILE_PATH)
     filename = os.getenv("OUTPUT_FILE_NAME", DEFAULT_OUTPUT_FILE_NAME)
-    indents = os.getenv("INDENTS", DEFAULT_INDENTS)
+    indent = os.getenv("INDENTS", DEFAULT_INDENT)
 
     # Defaults
     if not path:
         path = DEFAULT_OUTPUT_FILE_PATH
     if not filename:
         filename = DEFAULT_OUTPUT_FILE_NAME
-    if not indents:
-        indents = DEFAULT_INDENTS
+    if not indent:
+        indent = DEFAULT_INDENT
 
     # Main parser
     wb = client.open_by_key(workbook_id)
@@ -49,7 +49,7 @@ def run_json_parser(client):
     os.makedirs(path, exist_ok=True)
     file_path = f"{path}{filename}"
     with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(list_of_dicts, f, indent=indents)
+        json.dump(list_of_dicts, f, indent=indent)
 
     print("Success!")
     print(f"Exported JSON file to: {path}{filename}")
