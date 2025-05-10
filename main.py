@@ -21,10 +21,14 @@ def run_json_parser(client):
     """Runs JSON parser. Arg: client object"""
     # Use environment variables for Sheet ID
     load_dotenv()
-    sheet_id = os.getenv("GOOGLE_SHEET_ID")
+    workbook_id = os.getenv("GOOGLE_SHEET_ID")
+    worksheet_id = os.getenv("WORKSHEET_NAME")
 
     # Main parser
-    workbook = client.open_by_key(sheet_id)
+    wb = client.open_by_key(workbook_id)
+    sht = wb.worksheet(worksheet_id)
+    list_of_dicts = sht.get_all_records()
+    print(list_of_dicts)
 
 if __name__ == "__main__":
     client = initialize_client()
